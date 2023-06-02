@@ -5,18 +5,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import lombok.AllArgsConstructor;
+
 import java.util.List;
 import java.util.Optional;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/produto")
 public class ProdutoController {
 
     private final ProdutoRepository repository;
+    private final ProdutoService produtoService;
 
-    public ProdutoController(ProdutoRepository repository) {
-        this.repository = repository;
-    }
+    
 
     @GetMapping("/")
     public List<Produto> getAllProdutos() {
@@ -32,7 +34,7 @@ public class ProdutoController {
     @PostMapping("/")
     public ResponseEntity<String> createProduto(@RequestBody ProdutoRequest request) {
         try {
-            Produto produto = ProdutoRequest.transcribe(request);
+            Produto produto = produtoService.transcribe(request);
             repository.save(produto);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (IllegalArgumentException e) {

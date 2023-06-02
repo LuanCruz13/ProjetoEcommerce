@@ -12,8 +12,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.ufmt.ProjetoEcommerce.Produto.Produto;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -22,7 +26,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-
+@NoArgsConstructor
 public class Categoria {
 
     @Id
@@ -33,6 +37,7 @@ public class Categoria {
 
     @Column(name = "nome", length = 200)
 
+    @JsonIgnore
     @OneToMany(mappedBy = "categoria")
     private List<Produto> Produtos;
 
